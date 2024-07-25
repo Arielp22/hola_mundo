@@ -10,7 +10,7 @@ mkdir documentos
 mkdir videos
 mkdir otros
 
-for archivo in *; do
+for archivo in “$directorio”/*; do
   tipo_archivo=$(file -b "$archivo")
 
   if echo "$tipo_archivo" | grep -iq "jpg|png|jpeg"; then
@@ -36,4 +36,5 @@ done
 
 
 echo "Estructura de directorios:"
-tree
+tree “$directorio”
+
