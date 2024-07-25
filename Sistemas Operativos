@@ -1,0 +1,39 @@
+#!/bin/bash
+
+echo "Ingrese un directorio:"
+read -r directorio
+
+cd "$directorio"
+
+mkdir imagenes
+mkdir documentos
+mkdir videos
+mkdir otros
+
+for archivo in *; do
+  tipo_archivo=$(file -b "$archivo")
+
+  if echo "$tipo_archivo" | grep -iq "jpg|png|jpeg"; then
+    mv "$archivo" imagenes
+
+  elif echo "$tipo_archivo" | grep -iq "txt|pdf|docx|xlsx"; then
+    mv "$archivo" documentos
+
+  elif echo "$tipo_archivo" | grep -iq "mp4|mov"; then
+    mv "$archivo" videos
+
+  else
+    mv "$archivo" otros
+
+  fi
+done
+
+echo "Tamaño total de carpetas:"
+echo "                         "
+for carpeta in imagenes documentos videos otros; do
+  du -sh "$directorio/$carpeta"
+done
+
+
+echo "Estructura de directorios:"
+tree
